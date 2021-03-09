@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: io.smallrye.reactive:smallrye-reactive-messaging-kafka:2.3.0.redhat-00002">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/smallrye/reactive/smallrye-reactive-messaging-kafka/2.3.0.redhat-00002/smallrye-reactive-messaging-kafka-2.3.0.redhat-00002.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/io/smallrye/reactive/smallrye-reactive-messaging-kafka/2.3.0.redhat-00002/smallrye-reactive-messaging-kafka-2.3.0.redhat-00002-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/smallrye/reactive/smallrye-reactive-messaging-kafka/2.3.0.redhat-00002/smallrye-reactive-messaging-kafka-2.3.0.redhat-00002-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.fge:jackson-coreutils:1.6.0.redhat-00014">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/fge/jackson-coreutils/1.6.0.redhat-00014/jackson-coreutils-1.6.0.redhat-00014.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/fge/jackson-coreutils/1.6.0.redhat-00014/jackson-coreutils-1.6.0.redhat-00014-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/fge/jackson-coreutils/1.6.0.redhat-00014/jackson-coreutils-1.6.0.redhat-00014-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

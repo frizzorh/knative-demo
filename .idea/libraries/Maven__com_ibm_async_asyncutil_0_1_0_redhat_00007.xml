@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.ibm.async:asyncutil:0.1.0.redhat-00007">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/ibm/async/asyncutil/0.1.0.redhat-00007/asyncutil-0.1.0.redhat-00007.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/ibm/async/asyncutil/0.1.0.redhat-00007/asyncutil-0.1.0.redhat-00007-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/ibm/async/asyncutil/0.1.0.redhat-00007/asyncutil-0.1.0.redhat-00007-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

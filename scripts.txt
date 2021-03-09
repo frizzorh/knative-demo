@@ -1,0 +1,92 @@
+### SPRING BOOT
+
+#Verify dev run
+./mvnw spring-boot:run
+
+time curl http://localhost:8080
+
+#Build image with podman
+./mvnw package
+podman build -t localhost/frossi/rest-sb .
+
+#Run image with podman
+podman run -p 8080:8080 localhost/frossi/rest-sb
+
+time curl http://localhost:8080
+
+#OCP login
+
+#OCP create project
+oc new-project standard-deploy
+oc project standard-deploy
+#Push image to OCP
+podman login -u "$(oc whoami)" -p "$(oc whoami -t)" "$(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')"
+podman tag frossi/rest-sb:latest "$(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')/standard-deploy/rest-sb:latest"
+podman push --tls-verify=false "$(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')/standard-deploy/rest-sb:latest" 
+
+#Deploy to OCP and test
+oc new-app rest-sb:latest -n standard-deploy
+oc expose svc/rest-sb
+
+time curl http://"$(oc get route rest-sb --template='{{ .spec.host }}')"
+
+
+### QUARKUS JDK
+
+./mvnw compile quarkus:dev
+
+time curl http://localhost:8080
+
+podman build -f Dockerfile.jvm -t localhost/frossi/rest-quarkus-jvm .
+
+#Run image with podman
+podman run -p 8080:8080 localhost/frossi/rest-quarkus-jvm
+
+time curl http://localhost:8080
+
+podman tag frossi/rest-quarkus-jvm:latest "$(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')/standard-deploy/rest-quarkus-jvm:latest"
+podman push --tls-verify=false "$(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')/standard-deploy/rest-quarkus-jvm:latest" 
+oc new-app rest-quarkus-jvm:latest -n standard-deploy
+oc expose svc/rest-quarkus-jvm
+time curl http://"$(oc get route rest-quarkus-jvm --template='{{ .spec.host }}')"
+
+### QUARKUS NATIVE
+
+./mvnw clean package -Pnative
+./target/greeter-runner
+
+time curl http://localhost:8080
+
+podman build -f Dockerfile -t localhost/frossi/rest-quarkus-native .
+
+time curl http://localhost:8080
+
+podman tag frossi/rest-quarkus-native:latest "$(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')/standard-deploy/rest-quarkus-native:latest"
+podman push --tls-verify=false "$(oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}')/standard-deploy/rest-quarkus-native:latest" 
+
+oc new-app rest-quarkus-native:latest -n standard-deploy
+oc expose svc/rest-quarkus-native
+
+time curl http://"$(oc get route rest-quarkus-native --template='{{ .spec.host }}')"
+
+### KNATIVE knative-deploy
+oc new-project knative-deploy
+
+#permission to pull from standard-deploy registry
+oc policy add-role-to-user \
+    system:image-puller system:serviceaccount:knative-deploy:default \
+    --namespace=standard-deploy
+
+#create knative service
+kn service create rest-sb-sl --image image-registry.openshift-image-registry.svc:5000/standard-deploy/rest-sb --concurrency-limit 2 --concurrency-target 90 --max-scale 4 --min-scale 0
+kn service create rest-quarkus-jvm-sl --image image-registry.openshift-image-registry.svc:5000/standard-deploy/rest-quarkus-jvm --concurrency-limit 2 --concurrency-target 90 --max-scale 4 --min-scale 0
+kn service create rest-quarkus-native-sl --image image-registry.openshift-image-registry.svc:5000/standard-deploy/rest-quarkus-native --concurrency-limit 2 --concurrency-target 90 --max-scale 4 --min-scale 0
+
+
+time curl $(kn route list | grep rest-sb-sl | awk '{ print $2 }')
+time curl $(kn route list | grep rest-quarkus-jvm-sl | awk '{ print $2 }')
+time curl $(kn route list | grep rest-quarkus-native-sl | awk '{ print $2 }')
+
+
+hey -c 50 -z 10s "$(kn route list | grep rest-quarkus-native-sl | awk '{ print $2 }')"
+

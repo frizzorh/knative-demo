@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.fge:btf:1.2.0.redhat-00016">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/fge/btf/1.2.0.redhat-00016/btf-1.2.0.redhat-00016.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/fge/btf/1.2.0.redhat-00016/btf-1.2.0.redhat-00016-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/fge/btf/1.2.0.redhat-00016/btf-1.2.0.redhat-00016-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
